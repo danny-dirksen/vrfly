@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<!-- Generated automatically by AFRAME Exporter for Blender - https://silverslade.itch.io/a-frame-blender-exporter -->
+<head>
+    <title>WebXR Application</title>
+    <link rel="icon" type="image/png" href="favicon.ico"/>
+    <meta name="description" content="3D Application">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script type="text/javascript" src="js/webxr.js"></script>
+    <script type="text/javascript" src="js/joystick.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body onload="init();">
+  <a-scene stats  shadow="type: basic; autoUpdate: false;">
+    <!-- Assets -->
+    <a-assets>
+    	<a-asset-item id="Engine backup" src="./assets/Engine backup.gltf"></a-asset-item>
+    	<a-asset-item id="Human" src="./assets/Human.gltf"></a-asset-item>
+    	<a-asset-item id="Joystick" src="./assets/Joystick.gltf"></a-asset-item>
+    	<a-asset-item id="Landing gear" src="./assets/Landing gear.gltf"></a-asset-item>
+    	<a-asset-item id="Lever" src="./assets/Lever.gltf"></a-asset-item>
+    	<a-asset-item id="Lever.001" src="./assets/Lever.001.gltf"></a-asset-item>
+    	<a-asset-item id="Panel" src="./assets/Panel.gltf"></a-asset-item>
+    	<a-asset-item id="Ship" src="./assets/Ship.gltf"></a-asset-item>
+    	<a-asset-item id="window" src="./assets/window.gltf"></a-asset-item>
+      <img id="skyball"                 src="./resources/sky.jpg">
+      <img id="icon-play"           src="./resources/play.png">
+      <img id="icon-pause"          src="./resources/pause.png">
+      <img id="icon-play-skip-back" src="./resources/play-skip-back.png">
+      <img id="icon-mute"           src="./resources/mute.png">
+      <img id="icon-volume-low"     src="./resources/volume-low.png">
+      <img id="icon-volume-high"    src="./resources/volume-high.png">
+    </a-assets>
+
+    <!-- Entities -->
+    <a-entity id="#Ship"  gltf-model="#Ship" scale="1 1 1" position="0.0004067076079081744 0.4838572144508362 2.304320812225342" visible="true" shadow="cast: false" >
+      <a-entity id="#Engine backup"  gltf-model="#Engine backup" scale="1 1 1" position="0.07377099990844727 0.22430281341075897 2.82845139503479" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Human"  gltf-model="#Human" scale="1 1 1" position="0.0 -0.3929952383041382 1.5194090604782104" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Joystick"  gltf-model="#Joystick" scale="1 1 1" position="-0.18760541081428528 0.8777176737785339 1.069216251373291" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Landing gear"  gltf-model="#Landing gear" scale="1 1 1" position="0.0 0.06662246584892273 1.5194090604782104" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Lever"  gltf-model="#Lever" scale="1 1 1" position="0.056724511086940765 0.9323283433914185 1.1214019060134888" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Lever.001"  gltf-model="#Lever.001" scale="1 1 1" position="0.19485370814800262 0.9323283433914185 1.1214019060134888" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#Panel"  gltf-model="#Panel" scale="1 1 1" position="-0.04498946666717529 0.8161852359771729 1.0115827322006226" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="#window"  gltf-model="#window" scale="1 1 1" position="0.0 -0.40886396169662476 1.5194090604782104" visible="true" shadow="cast: false" ></a-entity>
+      <a-entity id="player" position="0 -0.2 0" movement-controls="speed: 0.10000000149011612;">
+        <a-entity id="camera" camera="near: 0.001" position="0 1.7000000476837158 0" look-controls="pointerLockEnabled: true">
+          <a-entity id="cursor" cursor="fuse: false;" animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 50; from: 	0.1 0.1 0.1; to: 1 1 1" position="0 0 -0.1" geometry="primitive: circle; radius: 0.001;" material="color: #CCC; shader: flat;"></a-entity>
+        </a-entity>
+        <a-entity id="leftHand" oculus-touch-controls="hand: left" vive-controls="hand: left"></a-entity>
+        <a-entity id="rightHand" laser-controls oculus-touch-controls="hand: right" vive-controls="hand: right" ></a-entity>
+      </a-entity>
+    </a-entity>
+
+
+    <!-- Lights -->
+    <a-entity light="intensity: 1.0; castShadow: false; shadowBias: -0.001; shadowCameraFar: 501.02; shadowCameraBottom: 12; shadowCameraFov: 101.79; shadowCameraNear: 0; shadowCameraTop: -5; shadowCameraRight: 10; shadowCameraLeft: -10; shadowRadius: 2" position="1.36586 7.17965 1"></a-entity>
+    <a-entity light="type: ambient; intensity: 1.0"></a-entity>
+
+    <!-- Sky -->
+    <a-sky src="#skyball"></a-sky>
+  </a-scene>
+</body>
+</html>
+</html>
+<!-- Generated automatically by AFRAME Exporter for Blender - https://silverslade.itch.io/a-frame-blender-exporter -->

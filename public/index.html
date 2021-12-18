@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<!-- Generated automatically by AFRAME Exporter for Blender - https://silverslade.itch.io/a-frame-blender-exporter -->
+<head>
+    <title>VR Fly</title>
+    <link rel="icon" type="image/png" href="favicon.ico"/>
+    <meta name="description" content="3D Space Game">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    <script src="../js/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <script src="js/components.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/ship.js"></script>
+  <script src="js/control.js"></script>
+  <a-scene physics="debug: false; friction: 0.003; restitution: 0.5; gravity: 0" gltf-model="dracoDecoderPath: draco/;">
+    <a-assets timeout="60000">
+      <a-asset-item id="asteroid-collision-model" src="./assets/asteroid-collider.glb" preload="auto"></a-asset-item>
+      <a-asset-item id="asteroid-model" src="./assets/asteroid.glb" preload="auto"></a-asset-item>
+    	<a-asset-item id="joystick-model" src="./assets/joystick.glb" preload="auto"></a-asset-item>
+    	<a-asset-item id="lever-model" src="./assets/lever.glb" preload="auto"></a-asset-item>
+    	<a-asset-item id="panel-model" src="./assets/panel.glb" preload="auto"></a-asset-item>
+      <a-gltf-model id="ship-body-model" src="./assets/ship-body.glb" preload="auto"></a-gltf-model>
+      <a-gltf-model id="cargo-ship-collider" src="./assets/cargo-ship-collider.glb" preload="auto"></a-gltf-model>
+      <a-gltf-model id="cargo-ship-model" src="./assets/cargo-ship.glb" preload="auto"></a-gltf-model>
+      <a-gltf-model id="pod-model" src="./assets/pod.glb" preload="auto"></a-gltf-model>
+      <a-gltf-model id="paw-model" src="./assets/paw.glb" preload="auto"></a-gltf-model>
+      <img id="skyball" src="./resources/sky-black.jpg" preload="auto">
+      <img id="concrete" src="./resources/concrete.png" preload="auto">
+      <img id="concrete-normal" src="./resources/concrete-normal.png" preload="auto">
+      <audio id="engine" src="resources/engine.ogg" preload="auto"></audio>
+      <audio id="clang" src="resources/clang.mp3" preload="auto"></audio>
+      <audio id="oof" src="resources/oof.oga" preload="auto"></audio>
+      <a-mixin id="asteroid-collider" material="visible: false"></a-mixin>
+      <a-mixin id="asteroid" gltf-model="#asteroid-model" ></a-mixin>
+
+      <a-mixin id="controller"
+      sphere-collider="radius: 0.05"
+      static-body="shape: none" shape__main="shape: box; offset: 0 0 0; halfExtents: 0.02 0.05 0.07"
+      physics-collider
+      super-hands="
+        colliderEvent: collisions;
+        colliderEventProperty: els;
+        colliderEndEvent: collisions;
+        colliderEndEventProperty: clearedEls;
+        grabStartButtons: gripdown, mousedown;
+        grabEndButtons: gripup, mouseup;
+      "
+      collision-filter = "group: hands; collidesWith: levers; collisionForces: false"></a-mixin>
+
+      <a-mixin id="lever"></a-mixin>
+    </a-assets>
+    <a-box id="gun1" scale="0.2 0.2 0.2" wireframe="true" gun="container: #bullet-container; reload: 500; autoFire: true" position="5 5 -5"></a-box>
+    <a-entity id="bullet-container"></a-entity>
+    <a-entity id="asteroid-field" asteroid-field="count: 0"></a-entity>
+
+    <a-entity id="cargo-ship" position="100 0 0" gltf-model="#cargo-ship-collider" static-body="shape: hull" visible="false"></a-entity>
+    <a-entity gltf-model="#cargo-ship-model" model-for="#cargo-ship"></a-entity>
+
+    <a-entity id="pod" position="50 50 50" static-body="shape: cylinder" visible="false"></a-entity>
+    <a-entity gltf-model="#pod-model" model-for="#pod"></a-entity>
+
+    <a-entity id="ship" position="0 0.384 0" gltf-model="#ship-body-model" dynamic-body-ship ship-engines wasd-ship directional-drag="intensity: 0.5" sound__1="src: #oof; on: oof; poolSize: 6" sound__2="src: #clang; on: bump; poolSize: 12" hp="max: 5">
+      <a-box id="ship-gun" scale="0.2 0.2 0.2" wireframe="true" gun="container: #bullet-container; reload: 100" position="0 0 -3"></a-box>
+      <a-entity position="0 1.040 0.890" rotation="30 0 0" scale="0.45 0.01 1" geometry="primitive: plane" material="color: #111">
+        <a-entity id="health-bar" position="0 0 0.001" geometry="primitive: plane; width: 0.97; height: 0.5" material="color: #FFAA22" health-bar="#ship"></a-entity>
+      </a-entity>
+      <a-entity id="panel" edit position="0 0.4 0.971" rotation="45 0 0" class="autoplay" sound="src: #engine; loop: true" gltf-model="#panel-model" static-body="shape:none">
+
+        <a-entity id="joystick1" mixin="lever" class="raycast interactive" position="-0.144 0 0" gltf-model="#joystick-model"
+        static-body="shape: none" shape__main="shape: sphere; offset: 0 0.07 0; radius: 0.09" physics-collider collision-filter="group: levers; collidesWith: hands"
+        lever__hor="target: #ship; leverAxis: z; direction: 1 0 0; controls: rollLeftRight"
+        lever__vert="target: #ship; leverAxis: x; direction: 0 1 0; controls: upDown; inverted: true"></a-entity>
+
+        <a-entity id="lever1" mixin="lever" class="raycast interactive" position="0.100 -0.058 0.002" scale="0.6 0.6 0.6" gltf-model="#lever-model"
+        static-body="shape: none" shape__main="shape: sphere; offset: 0 0.35 0; radius: 0.06" physics-collider collision-filter="group: levers; collidesWith: hands"
+        lever="target: #ship; leverAxis: x; direction: 0 1 0; controls: backForward; inverted: true"></a-entity>
+
+        <a-entity id="lever2" mixin="lever" class="raycast interactive" position="0.240 -0.058 0.002" scale="0.6 0.6 0.6" gltf-model="#lever-model"
+        static-body="shape: none" shape__main="shape: sphere; offset: 0 0.35 0; radius: 0.06" physics-collider collision-filter="group: levers; collidesWith: hands"
+        lever="target: #ship; leverAxis: x; direction: 0 1 0; controls: leftRight; inverted: true"></a-entity>
+
+        <a-sphere id="damp-off-button" class="raycast interactive" position="-0.25 0 -0.26" scale="0.02 0.02 0.02"
+        static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
+        button="target: #ship; event: damp-off" color="#f00"></a-sphere>
+
+        <a-sphere id="damp-on-button" class="raycast interactive" position="-0.15 0 -0.26" scale="0.02 0.02 0.02"
+        static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
+        button="target: #ship; event: damp-on" color="#0f0"></a-sphere>
+
+        <a-sphere id="fire-button" class="raycast interactive" position="0 0 -0.15" scale="0.04 0.04 0.04"
+        static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
+        button="target: #ship-gun; event: fire" color="#f80"></a-sphere>
+
+
+
+      </a-entity>
+
+      <a-entity id="player" player position="0 -0.2 1.5">
+        <a-entity id="left-hand" mixin="controller" hand-controls="hand: left; color: #ff2211" scale="0.01 0.01 0.01">
+          <a-entity gltf-model="#paw-model" rotation="0 0 90" scale="100 100 100"></a-entity>
+        </a-entity>
+
+        <a-entity id="right-hand" mixin="controller" hand-controls="hand: right; handModelStyle: highPoly; color: #ff2211" custom-hand-model="#paw-model" >
+          <a-entity rotation="0 0 -90"></a-entity>
+        </a-entity>
+
+        <a-entity  id="camera" camera="near: 0.001" position="0 1.1 0" look-controls="pointerLockEnabled: true">
+          <a-entity id="debug" position="0 0 -0.5" scale="0.5 0.5 0.5" text="value: TESTING"></a-entity>
+          <a-entity id="cursor"
+            animation__mouseclicked="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.00011 0.00011 0.00011; to: 0.0011 0.0011 0.0011"
+            animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 0.0011 0.0011 0.0011; to: 0.00011 0.00011 0.00011"
+            animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 0.0011 0.0011 0.0011"
+            cursor raycaster="objects: .raycast; far: 5; showLine: true"
+            material="color: white; shader: flat"
+            position="0 0 -0.2"
+            geometry="primitive: ring"
+            sphere-collider
+            super-hands="colliderEvent: raycaster-intersection;
+                         colliderEventProperty: els;
+                         colliderEndEvent: raycaster-intersection-cleared;
+                         colliderEndEventProperty: clearedEls;"
+            scale="0.0011 0.0011 0.0011"
+          ></a-entity>
+
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- <a-entity id="ship-2" position="5 0 0" gltf-model="#ship-body-model" dynamic-body></a-entity> -->
+    <a-box scale="30 30 30" position="0 -16.5 0" rotation="0 0 0" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
+    <a-box scale="30 60 30" position="-20 0 -25" rotation="-30 -30 30" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
+
+
+    <!-- Lights -->
+  <a-entity light="type: ambient; intensity: 0.1;"></a-entity>
+  <a-light type="directional" position="0 0 0" rotation="0 -90 0" target="#directionaltarget">
+    <a-entity id="directionaltarget" position="0 0 -1"></a-entity>
+  </a-light>
+  <a-entity light="type: hemisphere;
+                   intensity: 0.4;
+                   color: #4290ff"
+            position="0 -1 0"></a-entity>
+    <!-- Sky -->
+    <a-sky src="#skyball" rotation="-1.9100000000000001 0 9.56" radius="5000" imitate-position="#camera"></a-sky>
+  </a-scene>
+</body>
+</html>
+<!-- Generated automatically by AFRAME Exporter for Blender - https://silverslade.itch.io/a-frame-blender-exporter -->
