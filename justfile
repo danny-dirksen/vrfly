@@ -1,7 +1,7 @@
 questhost := "192.168.1.150:5555"
 
 dev:
-	miniserve
+	serve
 
 a:
 	adb tcpip 5555
@@ -11,10 +11,10 @@ b:
 # google-chrome "chrome://inspect/#devices"
 
 c:
-	miniserve public
+	serve public
 
 d:
-	ngrok http 8080
+	ngrok http 5000
 
 f:
 	ngrok http file:///Users/daniel/Github/vrfly/public/
