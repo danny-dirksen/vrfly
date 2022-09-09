@@ -57,20 +57,40 @@
 
       <a-mixin id="lever"></a-mixin>
     </a-assets>
-    <a-box id="gun1" scale="0.2 0.2 0.2" wireframe="true" gun="container: #bullet-container; reload: 500; autoFire: true" position="5 5 -5"></a-box>
+
+    <!-- TURRET -->
+    <a-entity turret-mount>
+      <a-box id="gun1" scale="1 1 1" wireframe="true" gun="container: #bullet-container; reload: 500; autoFire: true" position="5 5 -5"></a-box>
+    </a-entity>
     <a-entity id="bullet-container"></a-entity>
-    <a-entity id="asteroid-field" asteroid-field="count: 0"></a-entity>
+    
+    <a-entity id="asteroid-field" asteroid-field="count: 10"></a-entity>
 
-    <a-entity id="cargo-ship" position="100 0 0" gltf-model="#cargo-ship-collider" static-body="shape: hull" visible="false"></a-entity>
-    <a-entity gltf-model="#cargo-ship-model" model-for="#cargo-ship"></a-entity>
+    <!-- CARGO SHIP -->
+    <a-entity id="cargo-ship1" position="30 -10 -20" gltf-model="#cargo-ship-collider" static-body="shape: hull" visible="false"></a-entity>
+    <a-entity gltf-model="#cargo-ship-model" model-for="#cargo-ship1"></a-entity>
 
-    <a-entity id="pod" position="50 50 50" static-body="shape: cylinder" visible="false"></a-entity>
-    <a-entity gltf-model="#pod-model" model-for="#pod"></a-entity>
+    <a-entity id="cargo-ship2" position="50 20 -40" gltf-model="#cargo-ship-collider" static-body="shape: hull" visible="false"></a-entity>
+    <a-entity gltf-model="#cargo-ship-model" model-for="#cargo-ship2"></a-entity>
+
+    <!-- PODS -->
+    <a-entity id="pod1" position="10 10 -30" static-body="shape: cylinder" visible="false"></a-entity>
+    <a-entity gltf-model="#pod-model" model-for="#pod1"></a-entity>
+
+    <a-entity id="pod2" position="10 0 -30" static-body="shape: cylinder" visible="false"></a-entity>
+    <a-entity gltf-model="#pod-model" model-for="#pod2"></a-entity>
+
+    <a-entity id="pod3" position="10 -10 -30" static-body="shape: cylinder" visible="false"></a-entity>
+    <a-entity gltf-model="#pod-model" model-for="#pod3"></a-entity>
+
+    <a-entity id="pod4" position="10 -20 -30" static-body="shape: cylinder" visible="false"></a-entity>
+    <a-entity gltf-model="#pod-model" model-for="#pod4"></a-entity>
+    
 
     <a-entity id="ship" position="0 0.384 0" gltf-model="#ship-body-model" dynamic-body-ship ship-engines wasd-ship directional-drag="intensity: 0.5" sound__1="src: #oof; on: oof; poolSize: 6" sound__2="src: #clang; on: bump; poolSize: 12" hp="max: 5">
       <a-box id="ship-gun" scale="0.2 0.2 0.2" wireframe="true" gun="container: #bullet-container; reload: 100" position="0 0 -3"></a-box>
       <a-entity position="0 1.040 0.890" rotation="30 0 0" scale="0.45 0.01 1" geometry="primitive: plane" material="color: #111">
-        <a-entity id="health-bar" position="0 0 0.001" geometry="primitive: plane; width: 0.97; height: 0.5" material="color: #FFAA22" health-bar="#ship"></a-entity>
+        <a-entity id="health-bar" position="0 0 0.001" geometry="primitive: plane; width: 0.97; height: 0.5" material="shader: flat; color: #11AA22" health-bar="#ship"></a-entity>
       </a-entity>
       <a-entity id="panel" edit position="0 0.4 0.971" rotation="45 0 0" class="autoplay" sound="src: #engine; loop: true" gltf-model="#panel-model" static-body="shape:none">
 
@@ -89,15 +109,15 @@
 
         <a-sphere id="damp-off-button" class="raycast interactive" position="-0.25 0 -0.26" scale="0.02 0.02 0.02"
         static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
-        button="target: #ship; event: damp-off" color="#f00"></a-sphere>
+        button="target: #ship; event: damp-off" material="shader: flat; color: #c11"></a-sphere>
 
         <a-sphere id="damp-on-button" class="raycast interactive" position="-0.15 0 -0.26" scale="0.02 0.02 0.02"
         static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
-        button="target: #ship; event: damp-on" color="#0f0"></a-sphere>
+        button="target: #ship; event: damp-on" material="shader: flat; color: #11c"></a-sphere>
 
         <a-sphere id="fire-button" class="raycast interactive" position="0 0 -0.15" scale="0.04 0.04 0.04"
         static-body="shape: sphere" physics-collider collision-filter="group: levers; collidesWith: hands"
-        button="target: #ship-gun; event: fire" color="#f80"></a-sphere>
+        button="target: #ship-gun; event: fire" material="shader: flat; color: #c81"></a-sphere>
 
 
 
@@ -113,7 +133,7 @@
         </a-entity>
 
         <a-entity  id="camera" camera="near: 0.001" position="0 1.1 0" look-controls="pointerLockEnabled: true">
-          <a-entity id="debug" position="0 0 -0.5" scale="0.5 0.5 0.5" text="value: TESTING"></a-entity>
+          <!-- <a-entity id="debug" position="0 0 -0.5" scale="0.5 0.5 0.5" text="value: TESTING"></a-entity> -->
           <a-entity id="cursor"
             animation__mouseclicked="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.00011 0.00011 0.00011; to: 0.0011 0.0011 0.0011"
             animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 0.0011 0.0011 0.0011; to: 0.00011 0.00011 0.00011"
@@ -135,8 +155,9 @@
     </a-entity>
 
     <!-- <a-entity id="ship-2" position="5 0 0" gltf-model="#ship-body-model" dynamic-body></a-entity> -->
-    <a-box scale="30 30 30" position="0 -16.5 0" rotation="0 0 0" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
-    <a-box scale="30 60 30" position="-20 0 -25" rotation="-30 -30 30" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
+    <a-box scale="20 20 20" position="-10 -20 -10" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
+    <a-box scale="20 20 20" position="-20 -10 -20" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
+    <a-box scale="20 20 20" position="-30 0 -30" static-body material="repeat: 10 10; normalMap: #concrete-normal; normalTextureRepeat: 10 10; src: #concrete"></a-box>
 
 
     <!-- Lights -->

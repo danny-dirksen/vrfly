@@ -29,7 +29,11 @@ function playSounds() {
 function debug(thing) {
   this.log = this.log || "";
   this.log += thing + "\n";
-  document.querySelector("#debug").setAttribute('text', {value: this.log});
+  this.el = document.querySelector("#debug");
+  if (this.el) {
+    this.el.setAttribute('text', {value: this.log});
+  }
+  
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -67,6 +71,12 @@ AFRAME.registerComponent('asteroid-field', {
       asteroidCollider.appendChild(asteroid);
       this.el.appendChild(asteroidCollider);
     }
+  }
+});
+
+AFRAME.registerComponent("turret-mount", {
+  tick: function() {
+    this.el.object3D.rotation.y += 0.01;
   }
 });
 
@@ -164,6 +174,7 @@ AFRAME.registerComponent("model-for", {
   },
   events: {
     'model-loaded': function() {
+      console.log(this);
       this.el.object3D.parent = this.data.object3D;
     }
   }
