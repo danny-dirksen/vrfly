@@ -1,4 +1,4 @@
-# vrfly
+# VR Spaceship Scene
 
 ![A gif of a spaceship flying through space](/doc/demo.gif)
 
