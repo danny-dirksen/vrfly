@@ -4,6 +4,8 @@
 
 Note: While this project is best enjoyed in VR, it can be run on the web using a keyboard and mouse.
 
+Demo (Headset Recommended): [Play](danny-dirksen.github.io/vrfly/public)
+
 ## Description
 
 This is a work-in-progress A-Frame test project currently involving a small, rusty, flyable spaceship in vr which you can fly around a simple demo scene.
