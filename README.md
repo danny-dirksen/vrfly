@@ -4,7 +4,7 @@
 
 Note: While this project is best enjoyed in VR, it can be run on the web using a keyboard and mouse.
 
-Demo (Headset Recommended): [Play](danny-dirksen.github.io/vrfly/public)
+Demo (Headset Recommended): [Play](https://danny-dirksen.github.io/vrfly/public)
 
 ## Description
 
