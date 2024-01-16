@@ -2,7 +2,7 @@
 
 ![A gif of a spaceship flying through space](/doc/demo.gif)
 
-Note: While this project is best enjoyed in VR, it can be run on the web using a keyboard and mouse.
+Note: While this project is best enjoyed in VR with hand controls, it can be run on the web using a keyboard and mouse.
 
 Demo (coming soon): [Play](https://danny-dirksen.github.io/vrfly/)
 
